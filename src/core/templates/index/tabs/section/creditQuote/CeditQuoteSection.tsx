@@ -85,7 +85,9 @@ export const CeditQuoteSection = () => {
           placeholder="Plazos"
         >
           {deadlines.map((deadline) => (
-            <option value={deadline._id}>{deadline.weeks}</option>
+            <option key={deadline._id} value={deadline._id}>
+              {deadline.weeks}
+            </option>
           ))}
         </Select>
       </Box>

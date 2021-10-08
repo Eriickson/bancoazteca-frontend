@@ -9,6 +9,8 @@ export const IndexPage = () => {
   useEffect(() => {
     getProducts();
     getDeadlines();
+
+    // eslint-disable-next-line
   }, []);
 
   return (
