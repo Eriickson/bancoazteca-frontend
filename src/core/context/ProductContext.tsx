@@ -34,8 +34,8 @@ const ProductProvider: FC = ({ children }) => {
     };
   }
 
-  async function deleteProduct(id: string) {
-    console.log("deleteProduct", id);
+  async function deleteProduct(sku: string) {
+    console.log("deleteProduct", sku);
   }
 
   return (

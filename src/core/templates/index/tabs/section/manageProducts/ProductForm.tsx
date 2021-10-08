@@ -12,23 +12,20 @@ import {
 import { useForm } from "react-hook-form";
 import { FormErrorAlert } from "../../../../../components";
 import { productValidationResolver } from "../../../../../../validations";
-import { useProduct } from "../../../../../context";
 
 interface ProductFormProps {
-  defaultValues?: Product;
+  defaultValue?: Product;
+  onSubmit(product: Product): void;
 }
 
-export const ProductForm: FC<ProductFormProps> = ({ defaultValues }) => {
+export const ProductForm: FC<ProductFormProps> = ({
+  defaultValue,
+  onSubmit,
+}) => {
   const { register, handleSubmit, formState } = useForm<Product>({
     resolver: productValidationResolver,
-    defaultValues,
+    defaultValues: { ...defaultValue },
   });
-
-  const { createProduct, updateProduct } = useProduct();
-
-  async function onSubmit(values: Product) {
-    defaultValues ? await updateProduct(values) : await createProduct(values);
-  }
 
   return (
     <form id="product-form" onSubmit={handleSubmit(onSubmit)}>
