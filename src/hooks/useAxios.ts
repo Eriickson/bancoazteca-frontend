@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios, { Method } from "axios";
 
-axios.defaults.baseURL = "http://localhost:9000";
+axios.defaults.baseURL = process.env.REACT_APP_URL_BACKEND;
 
 interface UseAxiosOptions {
   url: string;
