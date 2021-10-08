@@ -4,8 +4,8 @@ import { useAxios } from "../../hooks";
 interface DeadlinesContextValues {
   deadlines: Deadlines[];
   getDeadlines(): Promise<void>;
-  createDeadlines(product: Deadlines): Promise<void>;
-  updateDeadlines(product: Partial<Deadlines>): Promise<void>;
+  createDeadlines(deadline: Deadlines): Promise<void>;
+  updateDeadlines(deadline: Partial<Deadlines>): Promise<void>;
   deleteDeadlines(id: string): Promise<void>;
 }
 
@@ -32,8 +32,20 @@ const DeadlinesProvider: FC = ({ children }) => {
     if (response?.data) setDeadlines([...deadlines, response.data]);
   }
 
-  async function updateDeadlines(product: Partial<Deadlines>): Promise<void> {
-    console.log("updateDeadlines", product);
+  async function updateDeadlines(deadlineToUpdate: Deadlines): Promise<void> {
+    const response = await fetchData({
+      url: `/deadline/${deadlineToUpdate._id}`,
+      method: "PUT",
+      body: deadlineToUpdate,
+    });
+
+    if (response?.data) {
+      const newDeadlines = deadlines.map((deadline) =>
+        deadline._id === deadlineToUpdate?._id ? deadlineToUpdate : deadline
+      );
+
+      setDeadlines(newDeadlines);
+    }
   }
 
   async function deleteDeadlines(id: string) {
