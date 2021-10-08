@@ -68,7 +68,7 @@ export const ProductTable = () => {
         <Tbody>
           {!products.length && (
             <Tr>
-              <Td colSpan={4}>
+              <Td colSpan={5}>
                 <Text
                   textAlign="center"
                   fontWeight="medium"
@@ -82,12 +82,12 @@ export const ProductTable = () => {
           )}
           {products.map((product) => (
             <Tr
-              key={product.sku}
+              key={product._id}
               fontWeight={
-                product.sku === productSelected?.sku ? "semibold" : "normal"
+                product._id === productSelected?._id ? "semibold" : "normal"
               }
               onClick={() =>
-                productSelected?.sku === product.sku
+                productSelected?._id === product._id
                   ? setProductSelected(undefined)
                   : setProductSelected(product)
               }

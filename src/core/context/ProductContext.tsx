@@ -3,10 +3,12 @@ import { useAxios } from "../../hooks";
 
 interface ProductContextValues {
   products: Product[];
+  productSelected: Product | null;
   getProducts(): Promise<void>;
   createProduct(product: Product): Promise<void>;
   updateProduct(product: Partial<Product>): Promise<void>;
   deleteProduct(id: string): Promise<void>;
+  setProductSelected(product: Product): void;
 }
 
 const ProductContext = createContext<ProductContextValues | null>(
@@ -17,6 +19,8 @@ const ProductProvider: FC = ({ children }) => {
   const { fetchData } = useAxios();
 
   const [products, setProducts] = useState<Product[]>([]);
+
+  const [productSelected, setProductSelected] = useState<Product | null>(null);
 
   async function getProducts(): Promise<void> {
     const response = await fetchData({ url: "/product" });
@@ -60,10 +64,12 @@ const ProductProvider: FC = ({ children }) => {
     <ProductContext.Provider
       value={{
         products,
+        productSelected,
         getProducts,
         createProduct,
         updateProduct,
         deleteProduct,
+        setProductSelected,
       }}
     >
       {children}

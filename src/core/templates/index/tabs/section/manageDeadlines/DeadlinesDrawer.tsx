@@ -36,9 +36,12 @@ export const DeadlinesDrawer: FC<DeadlinesDrawerProps> = ({
   const { createDeadlines, updateDeadlines } = useDeadlines();
 
   async function onSubmit(values: Deadlines) {
-    type === "CREATE"
-      ? await createDeadlines(values)
-      : await updateDeadlines(values);
+    try {
+      type === "CREATE"
+        ? await createDeadlines(values)
+        : await updateDeadlines(values);
+      onClose();
+    } catch (err) {}
   }
 
   return (

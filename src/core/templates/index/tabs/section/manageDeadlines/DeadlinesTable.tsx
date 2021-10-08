@@ -12,6 +12,7 @@ import {
   Box,
   HStack,
   IconButton,
+  Text,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import numeral from "numeral";
@@ -19,21 +20,12 @@ import { DeadlinesDrawer } from "./DeadlinesDrawer";
 import { AlertDialog } from "../../../../../components";
 import { useDeadlines } from "../../../../../context";
 
-const deadlines: Deadlines[] = [
-  {
-    id: "1234",
-    normalRate: 1.0485,
-    punctualRate: 0.0689,
-    weeks: 10,
-  },
-];
-
 export const DeadlinesTable = () => {
   const [deadlinesSelected, setDeadlinesSelected] = useState<
     Deadlines | undefined
   >(undefined);
 
-  const { deleteDeadlines } = useDeadlines();
+  const { deleteDeadlines, deadlines } = useDeadlines();
 
   return (
     <Box>
@@ -45,10 +37,10 @@ export const DeadlinesTable = () => {
         />
         <AlertDialog
           title="Eliminar Deadlineso"
-          subtitle="Estás seguro de que quieres eliminar este deadlineso?"
+          subtitle="Estás seguro de que quieres eliminar este plazo?"
           role="red"
           onClickPrimaryButton={() =>
-            deadlinesSelected && deleteDeadlines(deadlinesSelected.id)
+            deadlinesSelected && deleteDeadlines(deadlinesSelected._id)
           }
         >
           <IconButton
@@ -60,7 +52,7 @@ export const DeadlinesTable = () => {
           />
         </AlertDialog>
       </HStack>
-      <Table variant="striped" colorScheme="gray">
+      <Table size="sm" variant="striped" colorScheme="gray">
         <TableCaption>Listado de Plazos</TableCaption>
         <Thead>
           <Tr>
@@ -70,14 +62,28 @@ export const DeadlinesTable = () => {
           </Tr>
         </Thead>
         <Tbody>
+          {!deadlines.length && (
+            <Tr>
+              <Td colSpan={4}>
+                <Text
+                  textAlign="center"
+                  fontWeight="medium"
+                  color="gray.400"
+                  fontSize="lg"
+                >
+                  No se han agregado plazos
+                </Text>
+              </Td>
+            </Tr>
+          )}
           {deadlines.map((deadlines) => (
             <Tr
-              key={deadlines.id}
+              key={deadlines._id}
               fontWeight={
-                deadlines.id === deadlinesSelected?.id ? "semibold" : "normal"
+                deadlines._id === deadlinesSelected?._id ? "semibold" : "normal"
               }
               onClick={() =>
-                deadlinesSelected?.id === deadlines.id
+                deadlinesSelected?._id === deadlines._id
                   ? setDeadlinesSelected(undefined)
                   : setDeadlinesSelected(deadlines)
               }

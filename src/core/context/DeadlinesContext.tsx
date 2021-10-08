@@ -1,10 +1,11 @@
 import React, { Context, createContext, FC, useContext, useState } from "react";
+import { useAxios } from "../../hooks";
 
 interface DeadlinesContextValues {
   deadlines: Deadlines[];
-  getDeadliness(): Promise<void>;
+  getDeadlines(): Promise<void>;
   createDeadlines(product: Deadlines): Promise<void>;
-  updateDeadlines(product: Partial<Deadlines>): Promise<Deadlines>;
+  updateDeadlines(product: Partial<Deadlines>): Promise<void>;
   deleteDeadlines(id: string): Promise<void>;
 }
 
@@ -13,38 +14,40 @@ const DeadlinesContext = createContext<DeadlinesContextValues | null>(
 ) as Context<DeadlinesContextValues>;
 
 const DeadlinesProvider: FC = ({ children }) => {
-  const [deadlines, setDeadliness] = useState<Deadlines[]>([]);
+  const { fetchData } = useAxios();
 
-  async function getDeadliness(): Promise<void> {
-    console.log("Obtener productos");
+  const [deadlines, setDeadlines] = useState<Deadlines[]>([]);
+
+  async function getDeadlines(): Promise<void> {
+    const response = await fetchData({ url: "/deadline" });
+    if (response?.data) setDeadlines(response.data);
   }
 
-  async function createDeadlines(product: Deadlines) {
-    console.log("createDeadlines", product);
+  async function createDeadlines(deadline: Deadlines): Promise<void> {
+    const response = await fetchData({
+      url: `/deadline`,
+      method: "POST",
+      body: deadline,
+    });
+    if (response?.data) setDeadlines([...deadlines, response.data]);
   }
 
-  async function updateDeadlines(
-    product: Partial<Deadlines>
-  ): Promise<Deadlines> {
+  async function updateDeadlines(product: Partial<Deadlines>): Promise<void> {
     console.log("updateDeadlines", product);
-
-    return {
-      id: "123",
-      normalRate: 12,
-      punctualRate: 12,
-      weeks: 12,
-    };
   }
 
-  async function deleteDeadlines(sku: string) {
-    console.log("deleteDeadlines", sku);
+  async function deleteDeadlines(id: string) {
+    await fetchData({ url: `/deadline/${id}`, method: "DELETE" });
+    const newDeadlines = deadlines.filter(({ _id }) => _id !== id);
+
+    setDeadlines(newDeadlines);
   }
 
   return (
     <DeadlinesContext.Provider
       value={{
         deadlines,
-        getDeadliness,
+        getDeadlines,
         createDeadlines,
         updateDeadlines,
         deleteDeadlines,

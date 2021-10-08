@@ -44,8 +44,6 @@ export const ProductForm: FC<ProductFormProps> = ({
     defaultValues: { ...defaultValue },
   });
 
-  console.log(defaultValue);
-
   return (
     <form id="product-form" onSubmit={handleSubmit(onSubmit)}>
       <VStack spacing={3}>

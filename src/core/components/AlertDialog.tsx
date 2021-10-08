@@ -66,7 +66,7 @@ export const AlertDialog: FC<AlertDialogProps> = ({
                 }}
                 ml={3}
               >
-                Delete
+                Sí, Eliminar
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
