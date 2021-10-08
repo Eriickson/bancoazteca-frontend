@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Divider, Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { ProductDrawer } from "./ProductDrawer";
 import { ProductTable } from "./ProductTable";
 

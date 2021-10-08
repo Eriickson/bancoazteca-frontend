@@ -3,13 +3,15 @@ import * as React from "react";
 import ReactDOM from "react-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import App from "./App";
-import { ProductProvider } from "./core/context";
+import { DeadlinesProvider, ProductProvider } from "./core/context";
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
       <ProductProvider>
-        <App />
+        <DeadlinesProvider>
+          <App />
+        </DeadlinesProvider>
       </ProductProvider>
     </ChakraProvider>
     <ColorModeScript />
