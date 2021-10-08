@@ -12,32 +12,22 @@ import {
   Box,
   HStack,
   IconButton,
+  Text,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { ProductDrawer } from "./ProductDrawer";
 import { AlertDialog } from "../../../../../components";
 import { useProduct } from "../../../../../context";
+import numeral from "numeral";
+import moment from "moment";
+import "moment/locale/es";
 
-const products: Product[] = [
-  {
-    sku: "123456781",
-    name: "Nombre 1",
-    description: "Desc 1",
-    price: 123,
-  },
-  {
-    sku: "123456782",
-    name: "Nombre 1",
-    description: "Desc 1",
-    price: 123,
-  },
-];
 export const ProductTable = () => {
   const [productSelected, setProductSelected] = useState<Product | undefined>(
     undefined
   );
 
-  const { deleteProduct } = useProduct();
+  const { products, deleteProduct } = useProduct();
 
   return (
     <Box>
@@ -52,7 +42,7 @@ export const ProductTable = () => {
           subtitle="Estás seguro de que quieres eliminar este producto?"
           role="red"
           onClickPrimaryButton={() =>
-            productSelected && deleteProduct(productSelected.sku)
+            productSelected && deleteProduct(productSelected._id)
           }
         >
           <IconButton
@@ -64,17 +54,32 @@ export const ProductTable = () => {
           />
         </AlertDialog>
       </HStack>
-      <Table variant="striped" colorScheme="gray">
+      <Table size="sm" variant="striped" colorScheme="gray">
         <TableCaption>Listado de productos</TableCaption>
         <Thead>
           <Tr>
             <Th>SKU</Th>
             <Th>Nombre</Th>
             <Th>Descripción</Th>
+            <Th>Creado</Th>
             <Th isNumeric>Precio</Th>
           </Tr>
         </Thead>
         <Tbody>
+          {!products.length && (
+            <Tr>
+              <Td colSpan={4}>
+                <Text
+                  textAlign="center"
+                  fontWeight="medium"
+                  color="gray.400"
+                  fontSize="lg"
+                >
+                  No se han agregado productos
+                </Text>
+              </Td>
+            </Tr>
+          )}
           {products.map((product) => (
             <Tr
               key={product.sku}
@@ -91,7 +96,8 @@ export const ProductTable = () => {
               <Td>{product.sku}</Td>
               <Td>{product.name}</Td>
               <Td>{product.description}</Td>
-              <Td isNumeric>MXN$ {product.price}</Td>
+              <Td>{moment(product.createdAt).locale("es").fromNow()}</Td>
+              <Td isNumeric>${numeral(product.price).format("0,0.00")}</Td>
             </Tr>
           ))}
         </Tbody>

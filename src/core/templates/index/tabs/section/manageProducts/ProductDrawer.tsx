@@ -18,6 +18,7 @@ import { EditIcon } from "@chakra-ui/icons";
 import { ProductForm } from "./ProductForm";
 
 import { useProduct } from "../../../../../context";
+import { nanoid } from "nanoid";
 
 interface ProductDrawerProps {
   defaultValue?: Product;
@@ -38,9 +39,22 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
   const { createProduct, updateProduct } = useProduct();
 
   async function onSubmit(values: Product) {
-    type === "CREATE"
-      ? await createProduct(values)
-      : await updateProduct(values);
+    const { size, material, color, typeGarment } = values;
+    const sku = `${size}-${material.substring(0, 3)}-${color.substring(
+      0,
+      3
+    )}-${typeGarment.substring(0, 3)}-${nanoid(6)}`.toUpperCase();
+    values = {
+      ...values,
+      sku,
+    };
+
+    try {
+      type === "CREATE"
+        ? await createProduct(values)
+        : await updateProduct(values);
+      onClose();
+    } catch (err) {}
   }
 
   return (
