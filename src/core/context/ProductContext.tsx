@@ -1,12 +1,12 @@
 import React, { Context, createContext, FC, useContext } from "react";
 
-interface ProductContext {
+interface ProductContextValues {
   ping: string;
 }
 
-const ProductContext = createContext<ProductContext | null>(
+const ProductContext = createContext<ProductContextValues | null>(
   null
-) as Context<ProductContext>;
+) as Context<ProductContextValues>;
 
 const ProductProvider: FC = ({ children }) => {
   return (
