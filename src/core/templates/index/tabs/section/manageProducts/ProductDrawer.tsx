@@ -42,14 +42,7 @@ export const ProductDrawer = () => {
           <DrawerHeader>Crea un nuevo producto</DrawerHeader>
 
           <DrawerBody>
-            <ProductForm
-              defaultValues={{
-                sku: "123456789",
-                name: "Product 1",
-                description: "Esto es una breve descripcion",
-                price: 12,
-              }}
-            />
+            <ProductForm />
           </DrawerBody>
 
           <DrawerFooter>

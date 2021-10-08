@@ -12,6 +12,7 @@ import {
 import { useForm } from "react-hook-form";
 import { FormErrorAlert } from "../../../../../components";
 import { productValidationResolver } from "../../../../../../validations";
+import { useProduct } from "../../../../../context";
 
 interface ProductFormProps {
   defaultValues?: Product;
@@ -23,8 +24,10 @@ export const ProductForm: FC<ProductFormProps> = ({ defaultValues }) => {
     defaultValues,
   });
 
-  function onSubmit(values: Product) {
-    console.log(values);
+  const { createProduct, updateProduct } = useProduct();
+
+  async function onSubmit(values: Product) {
+    defaultValues ? await updateProduct(values) : await createProduct(values);
   }
 
   return (
