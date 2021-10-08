@@ -40,7 +40,11 @@ export const DeadlinesForm: FC<DeadlinesFormProps> = ({
           >
             {weeksArray.map((_, i) => {
               const value = i + 1 * 4;
-              return <option value={value}>{value} Semanas</option>;
+              return (
+                <option key={value} value={value}>
+                  {value} Semanas
+                </option>
+              );
             })}
           </Select>
           <FormErrorAlert name="weeks" errors={formState.errors} />

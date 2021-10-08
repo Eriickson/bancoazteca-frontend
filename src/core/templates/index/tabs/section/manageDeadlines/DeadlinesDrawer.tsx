@@ -15,10 +15,7 @@ import {
 import { SmallAddIcon } from "@chakra-ui/icons";
 import { EditIcon } from "@chakra-ui/icons";
 import { DeadlinesForm } from "./DeadlinesForm";
-
-// import { DeadlinesForm } from "./DeadlinesForm";
-
-// import { useDeadlines } from "../../../../../context";
+import { useDeadlines } from "../../../../../context";
 
 interface DeadlinesDrawerProps {
   defaultValue?: Deadlines;
@@ -36,14 +33,12 @@ export const DeadlinesDrawer: FC<DeadlinesDrawerProps> = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef(null);
 
-  // const { createDeadlines, updateDeadlines } = useDeadlines();
+  const { createDeadlines, updateDeadlines } = useDeadlines();
 
   async function onSubmit(values: Deadlines) {
-    console.log(values);
-
-    // type === "CREATE"
-    // ? await createDeadlines(values)
-    // : await updateDeadlines(values);
+    type === "CREATE"
+      ? await createDeadlines(values)
+      : await updateDeadlines(values);
   }
 
   return (

@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Heading } from "@chakra-ui/react";
 import { DeadlinesDrawer } from "./DeadlinesDrawer";
 // import { ProductDrawer } from "./ProductDrawer";
-// import { ProductTable } from "./ProductTable";
+import { DeadlinesTable } from "./DeadlinesTable";
 
 export const ManageDeadlinesSection = () => {
   return (
@@ -16,7 +16,7 @@ export const ManageDeadlinesSection = () => {
         <Heading size="lg">Plazos Semanales</Heading>
         <DeadlinesDrawer />
       </Box>
-      {/* <ProductTable /> */}
+      <DeadlinesTable />
     </Box>
   );
 };

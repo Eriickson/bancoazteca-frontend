@@ -29,6 +29,7 @@ const DeadlinesProvider: FC = ({ children }) => {
     console.log("updateDeadlines", product);
 
     return {
+      id: "123",
       normalRate: 12,
       punctualRate: 12,
       weeks: 12,
