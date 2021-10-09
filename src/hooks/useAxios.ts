@@ -30,6 +30,7 @@ export const useAxios = () => {
     } catch (err: any) {
       setIsLoading(false);
       setError(err);
+      return err.response;
     }
   }
 

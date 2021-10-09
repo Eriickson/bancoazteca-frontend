@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Container } from "@chakra-ui/react";
 import { IndexPage } from "./pages";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
       >
         <IndexPage />
       </Container>
+      <Toaster />
     </Box>
   );
 };

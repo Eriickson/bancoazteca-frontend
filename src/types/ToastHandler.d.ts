@@ -1,0 +1,1 @@
+type ToastHandler = "error" | "success";

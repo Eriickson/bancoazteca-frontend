@@ -49,12 +49,11 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
       sku,
     };
 
-    try {
+    const response =
       type === "CREATE"
         ? await createProduct(values)
         : await updateProduct(values);
-      onClose();
-    } catch (err) {}
+    response && onClose();
   }
 
   return (
@@ -89,6 +88,7 @@ export const ProductDrawer: FC<ProductDrawerProps> = ({
         onClose={onClose}
         finalFocusRef={btnRef}
         size="md"
+        closeOnOverlayClick={false}
       >
         <DrawerOverlay />
         <DrawerContent>

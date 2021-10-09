@@ -1,5 +1,6 @@
 import React, { Context, createContext, FC, useContext, useState } from "react";
 import { useAxios } from "../../hooks";
+import toast from "react-hot-toast";
 
 interface DeadlinesContextValues {
   deadlines: Deadlines[];
@@ -12,6 +13,10 @@ interface DeadlinesContextValues {
 const DeadlinesContext = createContext<DeadlinesContextValues | null>(
   null
 ) as Context<DeadlinesContextValues>;
+
+function generateToaster(message: string, type: ToastHandler = "success") {
+  toast[type](message);
+}
 
 const DeadlinesProvider: FC = ({ children }) => {
   const { fetchData } = useAxios();
@@ -30,6 +35,8 @@ const DeadlinesProvider: FC = ({ children }) => {
       body: deadline,
     });
     if (response?.data) setDeadlines([...deadlines, response.data]);
+
+    generateToaster("Plazo creado");
   }
 
   async function updateDeadlines(deadlineToUpdate: Deadlines): Promise<void> {
@@ -44,6 +51,7 @@ const DeadlinesProvider: FC = ({ children }) => {
         deadline._id === deadlineToUpdate?._id ? deadlineToUpdate : deadline
       );
 
+      generateToaster("Plazo actualizado");
       setDeadlines(newDeadlines);
     }
   }
@@ -53,6 +61,8 @@ const DeadlinesProvider: FC = ({ children }) => {
     const newDeadlines = deadlines.filter(({ _id }) => _id !== id);
 
     setDeadlines(newDeadlines);
+
+    generateToaster("Plazo eliminado");
   }
 
   return (
